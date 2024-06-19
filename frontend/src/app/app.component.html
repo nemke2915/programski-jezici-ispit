@@ -1,0 +1,71 @@
+<div>
+  <div>
+    <h2>Predmeti</h2>
+    <button (click)="openPredmetForm()">Dodaj Predmet</button>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Predmet</th>
+        <th>Profesor</th>
+        <th>Akcije</th>
+      </tr>
+      <tr *ngFor="let predmet of predmeti">
+        <td>{{ predmet.id }}</td>
+        <td>{{ predmet.imePredmeta }}</td>
+        <td>{{ predmet.profesor?.ime }} {{ predmet.profesor?.prezime }}</td>
+        <td>
+          <button (click)="openPredmetForm(predmet)">Edit</button>
+          <button (click)="deletePredmet(predmet.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="showPredmetForm">
+    <h3>{{ selectedPredmet ? 'Edit Predmet' : 'Create Predmet' }}</h3>
+    <form [formGroup]="predmetForm" (ngSubmit)="onSubmitPredmet()">
+      <label for="imePredmeta">Predmet:</label>
+      <input id="imePredmeta" formControlName="imePredmeta">
+      <label for="profesor">Profesor:</label>
+      <select id="profesor" formControlName="profesor">
+        <option *ngFor="let profesor of profesori" [ngValue]="profesor">{{ profesor.ime }} {{ profesor.prezime }}</option>
+      </select>
+      <button type="submit">{{ selectedPredmet ? 'Update' : 'Create' }}</button>
+      <button type="button" (click)="closePredmetForm()">Cancel</button>
+    </form>
+  </div>
+
+  <div>
+    <h2>Profesori</h2>
+    <button (click)="openProfesorForm()">Dodaj Profesora</button>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let profesor of profesori">
+        <td>{{ profesor.id }}</td>
+        <td>{{ profesor.ime }}</td>
+        <td>{{ profesor.prezime }}</td>
+        <td>
+          <button (click)="openProfesorForm(profesor)">Edit</button>
+          <button (click)="deleteProfesor(profesor.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="showProfesorForm">
+    <h3>{{ selectedProfesor ? 'Edit Profesor' : 'Create Profesor' }}</h3>
+    <form [formGroup]="profesorForm" (ngSubmit)="onSubmitProfesor()">
+      <label for="ime">Ime:</label>
+      <input id="ime" formControlName="ime">
+      <label for="prezime">Prezime:</label>
+      <input id="prezime" formControlName="prezime">
+      <button type="submit">{{ selectedProfesor ? 'Update' : 'Create' }}</button>
+      <button type="button" (click)="closeProfesorForm()">Cancel</button>
+    </form>
+  </div>
+</div>
